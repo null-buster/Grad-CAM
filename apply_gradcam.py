@@ -35,14 +35,22 @@ image = imagenet_utils.preprocess_input(image)
 # use the network to make predictions on the input image and find
 # the class label index with the largest corresponding probability
 preds = model.predict(image)
-i = np.argmax(preds[0])
+print("Type of preds:")
+print(type(preds))
+print("Shape of preds")
+print(preds.shape)
+print("Values")
+print(preds)
+print("second highest proba: "  + str(preds[0][np.argsort(preds[0])[-2]]))
+i = np.argsort(preds[0])[-2]
+# i = np.argmax(preds[0])
 # decode the ImageNet predictions to obtain the human-readable label
 decoded = imagenet_utils.decode_predictions(preds)
 (imagenetID, label, prob) = decoded[0][0]
 label = "{}: {:.2f}%".format(label, prob * 100)
 print("[INFO] {}".format(label))
 # initialize our gradient class activation map and build the heatmap
-cam = GradCAM(model, i)
+cam = GradCAM(model, i, "block5_conv2")
 heatmap = cam.compute_heatmap(image)
 # resize the resulting heatmap to the original input image dimensions
 # and then overlay heatmap on top of the image
