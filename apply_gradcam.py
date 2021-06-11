@@ -9,6 +9,8 @@ import numpy as np
 import argparse
 import imutils
 import cv2
+
+
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=True, help="path to the input image")
@@ -35,6 +37,9 @@ image = imagenet_utils.preprocess_input(image)
 # use the network to make predictions on the input image and find
 # the class label index with the largest corresponding probability
 preds = model.predict(image)
+
+"""
+#commenting out the parts used to print the 
 print("Type of preds:")
 print(type(preds))
 print("Shape of preds")
@@ -42,6 +47,7 @@ print(preds.shape)
 print("Values")
 print(preds)
 print("second highest proba: "  + str(preds[0][np.argsort(preds[0])[-2]]))
+"""
 i = np.argsort(preds[0])[-2]
 # i = np.argmax(preds[0])
 # decode the ImageNet predictions to obtain the human-readable label
